@@ -8,7 +8,7 @@ RUN curl -sSL https://get.haskellstack.org/ | sh
 
 # Copy the stack configuration files
 COPY stack.yaml package.yaml /app/
-COPY .stack-work/ /app/.stack-work/
+## COPY .stack-work/ /app/.stack-work/
 
 # Install system dependencies (if any)
 RUN apt-get update && apt-get install -y \
