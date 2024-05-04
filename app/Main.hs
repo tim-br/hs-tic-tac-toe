@@ -3,6 +3,7 @@
 module Main (main) where
 
 --import qualified Data.ByteString as B
+import System.IO
 import Control.Concurrent
     ( newChan, readChan, writeChan, forkIO, Chan )
 import Control.Monad ( forever)
@@ -205,6 +206,7 @@ server cred hp port ycs = do
 
 main :: IO ()
 main = Z.withSocketsDo $ do
+    hSetBuffering stdout LineBuffering
     args <- getArgs
     case getOpt RequireOrder options args of
       (actions, [hostname,port], _) -> do
