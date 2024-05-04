@@ -36,4 +36,4 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repository: tim-br/counter_k8s
-          event-type: deploy-clearsettleengine-event
+          event-type: deploy-hs-tic-tac-toe-event
