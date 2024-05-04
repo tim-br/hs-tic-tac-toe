@@ -2,7 +2,6 @@
 
 module Main (main) where
 
---import qualified Data.ByteString as B
 import System.IO
 import Control.Concurrent
     ( newChan, readChan, writeChan, forkIO, Chan )
@@ -61,15 +60,13 @@ sendGameState ctx game = do
 
 handleWin :: ConnectionStateTLS -> ConnectionStateTLS -> Player -> Game -> IO ()
 handleWin userA userB player nextGame = do
-    -- Notify user A of the win
     let winMessageA = "Player " ++ show player ++ " has won.\n"
     Z.send (user_context userA) (B.pack winMessageA)
-    sendGameState (user_context userA) nextGame  -- Send updated game state to user A
+    sendGameState (user_context userA) nextGame 
 
-    -- Notify user B of the win
     let winMessageB = "Player " ++ show player ++ " has won.\n"
     Z.send (user_context userB) (B.pack winMessageB)
-    sendGameState (user_context userB) nextGame  -- Send updated game state to user B
+    sendGameState (user_context userB) nextGame
 
     -- Close the TLS connections
     writeChan (closeChan userA) "close"
@@ -101,7 +98,6 @@ pairUsersTLS queue = forever $ do
     let user1' = user1 { gameRef = Just gameRef, otherUser = Just (user user2) }
     let user2' = user2 { gameRef = Just gameRef, otherUser = Just (user user1) }
 
-    -- Optionally, send a message to both users that the game is ready
     _ <- forkIO $ consume (user1', user2') processInput
     _ <- forkIO $ consume (user2', user1') processInput
     Z.send (user_context (user user1)) (B.pack "Your game is ready!\n")
@@ -140,14 +136,11 @@ processInput ctx moveStr userGameTuple =  do
                   putStrLn $ "other player moved at " ++ show (row, col)
                   new_game <- readIORef (fromJust $ gameRef userGame)
                   putStrLn $ "Current game state: \n" ++ show new_game
-                  -- Update Player B with Player A's move
                   sendGameState ctx nextGame
                   sendGameState otherUserCtx nextGame
-                  --
                   -- Determine if the game is over
                   case gameOver nextGame of
                     Ongoing -> do
-                      --informPlayersTLS otherUserI (user userGame) nextGame
                       Z.send otherUserCtx (B.pack ("Other player has moved at " ++ show (row, col) ++ ".\nYour turn to move. Enter your move (row col): "))
                       consume userGameTuple processInput
                     Draw -> do
@@ -182,7 +175,7 @@ consume userGameTuple k = do
         Nothing -> do
           writeChan (closeChan (user userGame)) "over"
           return ()
-        Just bs -> k (user_context (user userGame)) bs userGameTuple -- >> consume userGame k
+        Just bs -> k (user_context (user userGame)) bs userGameTuple
 
 server :: T.Credential -> Z.HostPreference -> NS.ServiceName
        -> Maybe CertificateStore -> IO ()
