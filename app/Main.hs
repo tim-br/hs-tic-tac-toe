@@ -153,8 +153,14 @@ processInput ctx moveStr userGameTuple =  do
                     Draw -> do
                       Z.send (user_context (user userGame)) (B.pack "Draw!\n")
                       sendGameState (user_context (user userGame)) game
+                      Z.send (user_context (user userGame)) (B.pack "Goodbye.!\n")
                       Z.send otherUserCtx (B.pack "Draw!\n")
                       sendGameState otherUserCtx game
+                      Z.send otherUserCtx (B.pack "Goodbye!\n")
+                      writeChan (closeChan (user userGame)) "close"
+                      writeChan (closeChan (fromJust $ otherUser userGame)) "close"
+                      T.bye (user_context (user userGame))
+                      T.bye (user_context (fromJust $ otherUser userGame))
 
                     Win player -> handleWin (user userGame) otherUserI player nextGame
 
