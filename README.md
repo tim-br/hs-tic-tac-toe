@@ -45,10 +45,16 @@ stack exec hs-tic-tac-toe-net-exe -- --cert=/app/certs/server.crt --key=/app/cer
 ```
 ## Connect as a Client:
 
+To connect to your local instance run, passing in the server you created.
+
+```
+openssl s_client -connect localohost:9700 -CAfile server.crt -verify 1 -verify_return_error -brief
+```
+
 After downloading server.crt from the root of the GitHub repository, you can initiate a connection to the public server. If there's no one to play against, run the command in two separate terminal windows or tabs to start a game with yourself.
 
 ```
-openssl s_client -connect hs-tic-tac-toe.nauths.io:9700 -CAfile server.crt -verify 1 -verify_return_error -brief
+openssl s_client -connect hs-tic-tac-toe.nauths.io:443 -CAfile server.crt -verify 1 -verify_return_error -brief
 ```
 
 ## Gameplay
