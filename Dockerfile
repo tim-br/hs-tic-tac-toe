@@ -20,4 +20,4 @@ VOLUME ["/app/certs"]
 # Run hs-tic-tac-toe-net when the container launches
 # Certificates are expected to be in the /app/certs directory
 ENTRYPOINT ["stack", "exec", "hs-tic-tac-toe-net-exe", "--"]
-CMD ["--cert=/app/certs/server.crt", "--key=/app/certs/server.key", "localhost", "9700"]
+CMD ["--cert=/app/certs/server.crt", "--key=/app/certs/server.key", "0.0.0.0", "9700"]
