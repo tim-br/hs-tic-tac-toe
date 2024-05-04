@@ -23,7 +23,11 @@ dependencies:
 - base >= 4.7 && < 5
 - network
 - bytestring
-
+- network-simple-tls >= 0.4.2
+- tls
+- data-default-class
+- crypton-x509
+- crypton-x509-store
 ghc-options:
 - -Wall
 - -Wcompat

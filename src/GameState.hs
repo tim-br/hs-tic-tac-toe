@@ -5,14 +5,18 @@ module GameState (
     Board,
     Game(..),
     initGame,
+    initGameIO,
     isBoardFull,
     switchPlayer,
     renderCell,
     makeMove,
     isPositionOccupied,
     gameOver,
+    isCurrentPlayer,
     GameResult(..),
 ) where
+
+import Data.IORef
 
 data Player = X | O deriving (Eq, Show)
 type Cell = Maybe Player
@@ -20,7 +24,9 @@ type Board = [[Cell]]
 
 data Game = Game {
     board :: Board,
-    currentPlayer :: Player
+    currentPlayer :: Player,
+    playerX :: String,
+    playerO :: String
 }
 
 data GameResult = Win Player | Draw | Ongoing
@@ -57,6 +63,20 @@ initGame = Game {
     board = replicate 3 (replicate 3 Nothing),
     currentPlayer = X
 }
+
+initGameIO :: String -> String -> IO (IORef Game)
+initGameIO user1 user2 = newIORef Game {
+    board = replicate 3 (replicate 3 Nothing),
+    currentPlayer = X,
+    playerX = user1,
+    playerO = user2
+}
+
+isCurrentPlayer :: Game -> String -> Bool
+isCurrentPlayer game player =
+    case currentPlayer game of
+        X -> playerX game == player
+        O -> playerO game == player
 
 -- Function to check if the board is full
 isBoardFull :: Board -> Bool

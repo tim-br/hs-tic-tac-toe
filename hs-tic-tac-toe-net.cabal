@@ -37,7 +37,12 @@ library
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , crypton-x509
+    , crypton-x509-store
+    , data-default-class
     , network
+    , network-simple-tls >=0.4.2
+    , tls
   default-language: Haskell2010
 
 executable hs-tic-tac-toe-net-exe
@@ -52,8 +57,13 @@ executable hs-tic-tac-toe-net-exe
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , crypton-x509
+    , crypton-x509-store
+    , data-default-class
     , hs-tic-tac-toe-net
     , network
+    , network-simple-tls >=0.4.2
+    , tls
   default-language: Haskell2010
 
 test-suite hs-tic-tac-toe-net-test
@@ -69,6 +79,11 @@ test-suite hs-tic-tac-toe-net-test
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , crypton-x509
+    , crypton-x509-store
+    , data-default-class
     , hs-tic-tac-toe-net
     , network
+    , network-simple-tls >=0.4.2
+    , tls
   default-language: Haskell2010

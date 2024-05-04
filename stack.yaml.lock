@@ -3,7 +3,14 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: network-simple-tls-0.4.2@sha256:880d4e1f87e6984d6e8c912b00a599d03174ec6741b379f006f78c0711343b63,1422
+    pantry-tree:
+      sha256: 9672e0e59e580e512a34fbfc2308d4ca66ccd8ed472943a3126d14187d31ae92
+      size: 333
+  original:
+    hackage: network-simple-tls-0.4.2
 snapshots:
 - completed:
     sha256: e5cac927cf7ccbd52aa41476baa68b88c564ee6ddc3bc573dbf4210069287fe7
