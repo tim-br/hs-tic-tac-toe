@@ -198,7 +198,7 @@ server cred hp port ycs = do
   where
     askForUsername :: T.Context -> IO B.ByteString
     askForUsername ctx = do
-        Z.send ctx $ B.pack "Please enter your username:"
+        Z.send ctx $ B.pack "Welcome, please enter your username:"
         mbs <- Z.recv ctx
         case mbs of
           Nothing -> error "Connection lost while receiving username."
