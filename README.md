@@ -13,7 +13,7 @@ A multiplayer Tic Tac Toe game implemented in Haskell, using TLS for secure netw
 1. **Build the Project:**
    Use the following command to compile the project:
    ```bash
-   stack build --system-ghc
+   stack build
 
 ## Generating TLS Certificates
 
