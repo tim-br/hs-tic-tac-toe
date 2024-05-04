@@ -32,9 +32,12 @@ jobs:
           AWS_DEFAULT_REGION: us-west-2
 
   trigger-deploy:
-    - name: Trigger Deployment
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        repository: tim-br/counter_k8s
-        event-type: deploy-hs-tic-tac-toe-event
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Deployment
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repository: tim-br/counter_k8s
+          event-type: deploy-hs-tic-tac-toe-event
