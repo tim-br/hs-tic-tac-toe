@@ -59,4 +59,8 @@ Players take turns entering their moves in the format "row column", for example,
 
 This project uses Haskell Stack for managing the Haskell environment and dependencies. It is recommended to familiarize yourself with the Stack commands and project structure for effective development.
 
-There are likely bugs with respect to users connecting and disconnecting suddenly. These will likely not be fixed in this iteration as I am planning to port this to ssh and fix the bus in that iteration.
+I made numerous mistakes with respect to architecture as I am still familiarizing myself with haskell.
+
+Likewise, there are likely bugs with respect to users connecting and disconnecting suddenly. 
+
+These mistakes likely not be fixed in this iteration as I am planning to port this to ssh and fix the bugs and other issues in that iteration.
