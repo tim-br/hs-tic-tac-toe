@@ -30,3 +30,10 @@ jobs:
           docker push 211125762589.dkr.ecr.us-west-2.amazonaws.com/hs-tic-tac-toe-net:latest
         env:
           AWS_DEFAULT_REGION: us-west-2
+
+      - name: Trigger Deployment
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repository: tim-br/counter_k8s
+          event-type: deploy-clearsettleengine-event

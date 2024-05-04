@@ -1,10 +1,8 @@
 # Use the official Haskell image from Docker Hub
-FROM haskell:8.10.7 as builder
+FROM haskell:latest as builder
 
 # Set the working directory in the container
 WORKDIR /app
-
-RUN curl -sSL https://get.haskellstack.org/ | sh
 
 # Copy the stack configuration files
 COPY stack.yaml package.yaml /app/
