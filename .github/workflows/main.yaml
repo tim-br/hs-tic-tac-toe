@@ -32,8 +32,8 @@ jobs:
           AWS_DEFAULT_REGION: us-west-2
 
   trigger-deploy:
+    needs: build-and-push
     runs-on: ubuntu-latest
-
     steps:
       - name: Trigger Deployment
         uses: peter-evans/repository-dispatch@v1
