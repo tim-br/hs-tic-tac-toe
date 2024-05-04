@@ -1,41 +1,23 @@
-# Use the official Haskell image from Docker Hub
-FROM haskell:9.6.4 as builder
+# Use an official Haskell runtime as a parent image
+FROM haskell:9.6.4
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the stack configuration files
-COPY stack.yaml package.yaml /app/
-## COPY .stack-work/ /app/.stack-work/
-
-# Install system dependencies (if any)
-RUN apt-get update && apt-get install -y \
-    libgmp-dev
-
-# Copy all files needed by the stack to build the project
+# Copy the current directory contents into the container at /app
 COPY . /app
 
-# Build the project using stack
-# Ensure stack will use the system GHC already available in the image
+# Install stack dependencies and build the project
+RUN stack setup
 RUN stack build --system-ghc
 
-# Reduce image size by using a smaller base image for the runtime environment
-FROM debian:buster-slim
-
-# Install runtime dependencies
-RUN apt-get update && apt-get install -y \
-    libgmp10 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy the build artifacts from the builder stage
-WORKDIR /app
-COPY --from=builder /app/.stack-work/install/x86_64-linux/ghc-8.10.7/bin/ /app/
-
-# Set the environment variables (if needed)
-ENV PATH="/app:${PATH}"
-
-# Expose the port the app runs on
+# Make port 9700 available to the world outside this container
 EXPOSE 9700
 
-# Run the application
-CMD ["hs-tic-tac-toe-net-exe", "--cert=/app/certs/server.crt", "--key=/app/certs/server.key", "localhost", "9700"]
+# Define volumes for certificates
+VOLUME ["/app/certs"]
+
+# Run hs-tic-tac-toe-net when the container launches
+# Certificates are expected to be in the /app/certs directory
+ENTRYPOINT ["stack", "exec", "hs-tic-tac-toe-net-exe", "--"]
+CMD ["--cert=/app/certs/server.crt", "--key=/app/certs/server.key", "localhost", "9700"]
