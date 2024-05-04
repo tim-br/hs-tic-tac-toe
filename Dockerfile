@@ -1,5 +1,5 @@
 # Use the official Haskell image from Docker Hub
-FROM haskell:latest as builder
+FROM haskell:9.6.4 as builder
 
 # Set the working directory in the container
 WORKDIR /app
