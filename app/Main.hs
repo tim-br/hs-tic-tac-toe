@@ -181,7 +181,7 @@ consume userGameTuple k = do
 server :: T.Credential -> Z.HostPreference -> NS.ServiceName
        -> Maybe CertificateStore -> IO ()
 server cred hp port ycs = do
-    putStrLn $ "Listening on port " <> port <> " ..."
+    putStrLn $ "Listening on port:: " <> port <> " ..."
     userQueue <- newChan
     _ <- forkIO $ pairUsersTLS userQueue
     let ss = Z.makeServerParams cred ycs
